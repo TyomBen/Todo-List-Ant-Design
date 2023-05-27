@@ -25,7 +25,7 @@ const [inputvalue, setInputValue] = useState ('')
             <Space>
         <Form onFinish = {handleSetInArray}>
           <Input type="text" size="large" value={inputvalue} onChange={(event) => setInputValue (event.target.value)}/>
-            <Button htmlType=""> Add</Button>   
+            <Button htmlType="submit"> Add</Button>   
         </Form>
         <Button onClick={hanlderDeleteAll}>Delete All</Button>
       </Space>
