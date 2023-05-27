@@ -1,13 +1,18 @@
 
-import { useState } from "react";
+import React, { useState } from "react";
 import {Button, Form, Input, Space, List} from "antd";
 import 'antd/dist/reset.css';
 const GetingDataAndShowing = () => {
 const [newdatas, setNewDatas] = useState ([]);
-    const handleSetInArray = (event) => {
-        event.preventDefault()
-        setNewDatas ([... newdatas, event.target.elements.task.value]);
-        event.target.reset()
+const [inputvalue, setInputValue] = useState ('')
+    const handleSetInArray = () => {
+        if (inputvalue.trim() !== ''){
+            setNewDatas ([... newdatas, inputvalue]);
+        }else {
+            return;
+        }
+         setInputValue ('');
+        
     }
     const hanlderDelete = (index) => {
         setNewDatas (newdatas.filter ((element, ind) => ind !== index))
@@ -16,30 +21,27 @@ const [newdatas, setNewDatas] = useState ([]);
         setNewDatas([])
     }
         return(
-            
             <>
- 
             <Space>
-        <form onSubmit = {handleSetInArray}>
-          <Input type="text" name="task" size="large" />
-            <button> Add</button>   
-        </form>
-        <button onClick={hanlderDeleteAll}>Delete All</button>
+        <Form onFinish = {handleSetInArray}>
+          <Input type="text" size="large" value={inputvalue} onChange={(event) => setInputValue (event.target.value)}/>
+            <Button htmlType=""> Add</Button>   
+        </Form>
+        <Button onClick={hanlderDeleteAll}>Delete All</Button>
       </Space>
-      <ul>
+      <List>
             {
                 newdatas.map ((item, index) => {
                     return(
-                        <>
-                        <li key={index}>{item}</li>
-                        <button onClick={() => hanlderDelete(index)}>Delete</button>
-                        </>
-                        
+                        <React.Fragment key={index}>
+                        <List.Item>{item}</List.Item>
+                        <Button onClick={() => hanlderDelete(index)}>Delete</Button>
+                        </React.Fragment>
                     )
                     
                 })
             }
-            </ul>
+            </List>
         </>
         
     )
